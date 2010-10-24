@@ -9,13 +9,15 @@ int main()
   ofstream ofs("result.txt");
   string line1;
   string line2;
+  bool equal=true;
   while (!ifs2.eof())
   {
     getline(ifs2,line2);
-    cout<<line2<<endl;
     while (!ifs1.eof()) {
       getline(ifs1,line1);
       if (line1!=line2) {
+        cout<<line2<<endl;
+        equal=false;
         ofs << line1;
         ofs << "\n";
       }
@@ -23,5 +25,6 @@ int main()
       }
     }
   }
+  if(equal) cout<<"they are the same"<<endl;
   return 0;
 }
