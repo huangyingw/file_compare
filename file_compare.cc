@@ -1,58 +1,27 @@
 #include <iostream>
 #include <fstream>
+#include <string>
 using namespace std;
-
-int main(int argc, char *argv[])
+int main()
 {
-  register int i;
-  int numread;
-
-  unsigned char buf1[1024], buf2[1024];
-  if (argc != 3)
+  ifstream ifs1("data1.txt");
+  ifstream ifs2("data2.txt");
+  ofstream ofs("result.txt");
+  string line1;
+  string line2;
+  while (!ifs2.eof())
   {
-    cout << "Usage: compfiles <file1> <file2>\n";
-    return 1;
-  }
-
-  ifstream f1(argv[1], ios::in | ios::binary);
-
-  if(!f1)
-  {
-    cout << "Can't open first file.\n";
-    return 1;
-  }
-  ifstream f2(argv[2], ios::in | ios::binary);
-  if (!f2)
-  {
-    cout << "Can't open second file.\n";
-    return 1;
-  }
-  cout << "Comparing files.....\n";
-  do
-  {
-    f1.read((char *) buf1, sizeof buf1);
-    f2.read((char *) buf2, sizeof buf2);
-    if (f1.gcount() != f2.gcount())
-    {
-      cout << "Files are of differing sizes.\n";
-      f1.close();
-      f2.close();
-      return 0;
-    }
-    // compare contents of buffers
-    for (i=0; i< f1.gcount(); i++)
-    {
-      if(buf1[i] != buf2[i])
-      {
-        cout << "Files differ.\n";
-        f1.close();
-        f2.close();
-        return 0;
+    getline(ifs2,line2);
+    cout<<line2<<endl;
+    while (!ifs1.eof()) {
+      getline(ifs1,line1);
+      if (line1!=line2) {
+        ofs << line1;
+        ofs << "\n";
+      }
+      else {
       }
     }
-  }while(!f1.eof() && ! f2.eof());
-  cout << "Files are the same.\n";
-  f1.close();
-  f2.close();
+  }
   return 0;
 }
